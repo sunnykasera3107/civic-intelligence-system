@@ -1,0 +1,12 @@
+[submodule "frontend-service"]
+	path = frontend-service
+	url = https://github.com/sunnykasera3107/civic-intelligence-system-frontend-service.git
+[submodule "complaint-service"]
+	path = complaint-service
+	url = https://github.com/sunnykasera3107/civic-intelligence-system-complaint-service.git
+[submodule "ai-service"]
+	path = ai-service
+	url = https://github.com/sunnykasera3107/civic-intelligence-system-ai-service.git
+[submodule "user-service"]
+	path = user-service
+	url = https://github.com/sunnykasera3107/civic-intelligence-system-user-service.git

@@ -1,0 +1,51 @@
+services:
+    ai_service:
+        build: ./ai-service
+        image: python:3.13.12-slim
+        container_name: ai-service
+        working_dir: /app
+        volumes:
+            - ./ai-service:/app
+        ports:
+            - "${AI_PORT}:8000"
+        env_file:
+            - .env
+        command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    
+    user_service:
+        build: ./user-service
+        image: python:3.14.2-slim
+        container_name: user-service
+        working_dir: /app
+        volumes:
+            - ./user-service:/app
+        ports:
+            - "${USER_PORT}:8000"
+        env_file:
+            - .env
+        command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    complaint_service:
+        build: ./complaint-service
+        image: python:3.14.2-slim
+        container_name: complaint-service
+        working_dir: /app
+        volumes:
+            - ./complaint-service:/app
+        ports:
+            - "${COMPLAINT_PORT}:8000"
+        env_file:
+            - .env
+        command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    frontend_service:
+        build: ./frontend-service
+        image: python:3.14.2-slim
+        container_name: frontend-service
+        working_dir: /app
+        volumes:
+            - ./frontend-service:/app
+        ports:
+            - "${FRONTEND_PORT}:8000"
+        env_file:
+            - .env
+        command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    
