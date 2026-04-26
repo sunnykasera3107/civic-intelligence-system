@@ -1,7 +1,7 @@
 services:
     ai_service:
         build: ./ai-service
-        image: python:3.13.12-slim
+        image: civic-ai-service:latest
         container_name: ai-service
         working_dir: /app
         volumes:
@@ -14,7 +14,7 @@ services:
     
     user_service:
         build: ./user-service
-        image: python:3.14.2-slim
+        image: civic-user-service:latest
         container_name: user-service
         working_dir: /app
         volumes:
@@ -26,7 +26,7 @@ services:
         command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     complaint_service:
         build: ./complaint-service
-        image: python:3.14.2-slim
+        image: civic-complaint-service:latest
         container_name: complaint-service
         working_dir: /app
         volumes:
@@ -38,7 +38,7 @@ services:
         command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     frontend_service:
         build: ./frontend-service
-        image: python:3.14.2-slim
+        image: civic-frontend-service:latest
         container_name: frontend-service
         working_dir: /app
         volumes:
@@ -49,3 +49,30 @@ services:
             - .env
         command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     
+    redis:
+        image: redis:trixie
+        container_name: redis
+        restart: always
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./redis-data:/data
+        command: redis-server --appendonly yes
+
+    postgres:
+        image: postgres:17
+        container_name: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: civil_intelligent_system_user
+            POSTGRES_PASSWORD: cis_password
+            POSTGRES_DB: civic_intelligent_system
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+            - ./init/data.dump:/docker-entrypoint-initdb.d/data.dump
+
+volumes:
+    postgres-data:
+    redis-data:
